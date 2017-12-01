@@ -1,0 +1,83 @@
+/* Question Write a one-file C program. Name it (first_name)_(last_name)_longest.c. 
+Your program should print out the 10 longest words from that file. 
+Words can be printed in any order, and if there are multiple words tied for 10th longest you can decide what to do.  
+This is intended to be a fairly quick exercise -- we are not looking for polished code.
+https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt.
+*/
+
+// My answer.
+
+/* 
+ * File:   main.cpp
+ * Author: Jessie
+ *
+ * Created on November 30, 2017, 6:46 PM
+ */
+
+#include <bits/stdc++.h>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+/*
+ * Tried to do it without a data structure but to be honest
+ * I havent used c++ much lately. 
+ */
+
+/* this doesnt work
+void deleteWord(std::string word){
+    string line;
+    ifstream input;
+    input.open("C:\\\\Users\\Jessie\\Documents\\ProgrammingCoding\\example.txt");
+    ofstream temp;
+    temp.open("temp.txt");
+
+    while (getline(input, line)) {
+        if(line != word){
+        temp << line << endl;
+        }
+    }
+    temp.close();
+    input.close();
+    remove("C:\\\\Users\\Jessie\\Documents\\ProgrammingCoding\\example.txt");
+    rename("temp.txt","C:\\\\Users\\Jessie\\Documents\\ProgrammingCoding\\example.txt");
+    }
+    */
+
+int main() {
+
+    int n = 10;
+    ifstream input;
+    input.open("C:\\\\Users\\Jessie\\Documents\\ProgrammingCoding\\example.txt");
+    string line;
+    string longest;
+    
+    
+    if (!input) {
+        cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
+// This doesnt work-- I wonder why
+/*
+    for (int i = 0; i < 10; i++) {
+        while(getline(input, line)) {
+            if(line.length() >= longest.length()){
+               longest = line; 
+            }
+        }
+        cout << longest << endl;
+        deleteWord(longest);
+    }
+    */
+    multimap <size_t, string, greater<size_t>> map;
+    
+    while (getline(input, line)) 
+        map.emplace(line.length(), line);
+    for (auto i = map.begin(); i != map.end() && n--; ++i)
+        cout << i->second << endl;
+    
+    return 0;
+}
+
